@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sponsors — RedWing Robotics</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0b0e15;color:#eaeaea;font-family:"Poppins",sans-serif;line-height:2;overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;background:rgba(10,10,25,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 8px 40px rgba(0,0,0,.6);display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;z-index:1200}
+nav h1{font-size:1.5rem;font-weight:800;color:#ff004d;cursor:pointer;letter-spacing:1px}
+.nav-links{display:flex;gap:18px}
+.nav-links a{color:#eaeaea;text-decoration:none;font-weight:600}
+.nav-links a:hover{color:#00b7ff}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{width:25px;height:3px;background:#fff;border-radius:3px;transition:.3s}
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}}
+main{padding:6.5rem 1.25rem 4rem;max-width:1100px;margin:0 auto}
+h2{color:#ff004d;font-size:1.8rem;margin-bottom:1rem;text-transform:uppercase}
+h3{color:#00b7ff;margin-bottom:.4rem;font-size:1.2rem}
+.boxed{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.6rem;margin:1.5rem 0;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.sponsor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem}
+.sponsor-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.5rem;text-align:center;transition:transform .3s,box-shadow .3s}
+.sponsor-card:hover{transform:translateY(-6px);box-shadow:0 8px 30px rgba(255,0,77,0.3)}
+.sponsor-card img{width:100%;max-width:180px;height:120px;object-fit:contain;margin-bottom:.8rem}
+footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.06);color:#999}
+.btn{margin-top:1rem;background:linear-gradient(90deg,#ff004d,#00b7ff);color:#fff;border:none;border-radius:30px;padding:.8rem 1.5rem;font-weight:700;cursor:pointer;transition:.3s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 5px 20px rgba(255,0,77,.4)}
+</style>
+</head>
+<body>
+<nav>
+  <h1 onclick="location.href='index.html'">RedWing Robotics</h1>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="programming.html">Programming</a>
+    <a href="cad.html">CAD</a>
+    <a href="building.html">Building</a>
+    <a href="marketing_booth.html">Marketing/Booth</a>
+    <a href="sponsors.html" style="color:#00b7ff;">Sponsors</a>
+    <a href="contact.html">Investors</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section>
+    <h2>Our Sponsors</h2>
+    <div class="boxed">
+      <p>RedWing Robotics proudly partners with organizations that share our vision for innovation, engineering excellence, and educational growth. Each sponsor contributes vital resources that empower students to bring advanced robotics to life.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Major Sponsors</h2>
+    <div class="sponsor-grid">
+      <div class="sponsor-card">
+        <img src="sponsor_placeholder1.png" alt="Melissa ISD">
+        <h3>Melissa ISD</h3>
+        <p>Provides funding, workspace, and educational resources, allowing students to pursue high-level robotics and engineering programs within the district.</p>
+      </div>
+      <div class="sponsor-card">
+        <img src="sponsor_placeholder2.png" alt="VEX Robotics">
+        <h3>VEX Robotics</h3>
+        <p>Supplies competition-grade robotics components, field equipment, and technical guidance that form the foundation of our robot’s engineering design.</p>
+      </div>
+      <div class="sponsor-card">
+        <img src="sponsor_placeholder3.png" alt="Texas Instruments">
+        <h3>Texas Instruments</h3>
+        <p>Supports our team with precision electronics and mentorship, helping members strengthen programming, hardware, and analytical problem-solving skills.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Community Partners</h2>
+    <div class="boxed">
+      <p>Local businesses, families, and organizations contribute through donations, materials, and logistical support, ensuring that RedWing Robotics continues to innovate and represent Melissa at regional and national competitions.</p>
+      <img src="sponsor_placeholder4.png" alt="Community Sponsors">
+    </div>
+  </section>
+
+  <section>
+    <h2>Our Promise</h2>
+    <div class="boxed">
+      <p>Every contribution receives detailed visibility through our engineering documentation, social media recognition, and event materials. We value long-term partnerships that help students evolve into tomorrow’s engineers and leaders.</p>
+      <button class="btn" onclick="location.href='contact.html'">Become a Sponsor</button>
+    </div>
+  </section>
+</main>
+
+<footer><p>© 2025 RedWing Robotics — All Rights Reserved.</p></footer>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+ const h=document.getElementById("hamburger");
+ const links=document.querySelector(".nav-links");
+ h.addEventListener("click",()=>{
+   const open=h.classList.toggle("active");
+   links.style.display=open?"flex":"";
+   links.style.flexDirection="column";
+   links.style.position="absolute";
+   links.style.top="70px";
+   links.style.right="20px";
+   links.style.background="rgba(0,0,0,0.9)";
+   links.style.padding="1rem";
+   links.style.borderRadius="10px";
+ });
+});
+</script>
+</body>
+</html>

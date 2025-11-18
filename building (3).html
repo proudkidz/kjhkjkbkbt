@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Building — RedWing Robotics</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#0b0e15;color:#eaeaea;font-family:"Poppins",sans-serif;line-height:2;overflow-x:hidden}
+
+  /* NAV */
+  nav{
+    position:fixed;left:0;top:0;width:100%;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1rem 1.25rem;background:rgba(10,10,25,.94);
+    backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);
+    box-shadow:0 8px 40px rgba(0,0,0,.6);z-index:1200;
+  }
+  nav h1{font-size:1.5rem;color:#ff004d;font-weight:800;cursor:pointer;letter-spacing:0.6px}
+  .nav-links{
+    display:flex;gap:18px;align-items:center;transition:transform .36s cubic-bezier(.2,.9,.3,1);
+  }
+  .nav-links a{color:#eaeaea;text-decoration:none;font-weight:600;letter-spacing:.6px}
+  .nav-links a:hover{color:#00b7ff}
+
+  /* hamburger button (always present and large clickable area) */
+  .hamburger{
+    display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:10px;border:none;
+    background:linear-gradient(180deg,#060607,#12030a);cursor:pointer;padding:8px;gap:4px;
+    box-shadow:0 8px 30px rgba(181,27,47,0.06);z-index:1300;
+  }
+  .hamburger:focus{outline:2px solid rgba(181,27,47,.18)}
+  .hamburger .bar{display:block;width:20px;height:2.7px;border-radius:3px;background:#fff;transition:transform .28s ease,opacity .28s ease,background .28s}
+  .hamburger[aria-expanded="true"] .bar:nth-child(1){transform:translateY(6px) rotate(45deg);background:#ff004d}
+  .hamburger[aria-expanded="true"] .bar:nth-child(2){opacity:0}
+  .hamburger[aria-expanded="true"] .bar:nth-child(3){transform:translateY(-6px) rotate(-45deg);background:#ff004d}
+
+  /* mobile nav panel (slides in from right via transform) */
+  .side-panel{
+    position:fixed;top:0;right:0;height:100vh;width:76%;
+    max-width:380px;background:linear-gradient(180deg,rgba(6,6,6,0.99),rgba(12,4,6,0.98));
+    transform:translateX(110%);box-shadow:-12px 0 40px rgba(0,0,0,.7);
+    padding:36px 22px;display:flex;flex-direction:column;gap:18px;align-items:flex-start;
+    z-index:1250;border-left:1px solid rgba(181,27,47,0.06);
+    transition:transform .36s cubic-bezier(.2,.9,.3,1);
+  }
+  .side-panel.open{transform:translateX(0) !important}
+  .side-panel .brand{display:flex;gap:12px;align-items:center}
+  .side-panel a{color:#eaf2f7;text-decoration:none;font-weight:700;padding:10px;border-radius:8px;width:100%}
+  .side-panel a:hover{color:#ff004d;background:rgba(255,255,255,0.02)}
+
+  /* Backdrop */
+  .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .3s;z-index:1220}
+  .backdrop.visible{opacity:1;pointer-events:auto}
+
+  /* Desktop behavior: keep nav-links visible inline */
+  @media(min-width:900px){
+    .hamburger{display:none}
+    .side-panel{display:none}
+    .nav-links{display:flex}
+  }
+  @media(max-width:899px){
+    .nav-links{display:none}
+    .hamburger{display:flex}
+  }
+
+  /* Content */
+  main{padding:6.5rem 1.25rem 4rem;max-width:1100px;margin:0 auto}
+  section{margin:1.5rem 0}
+  h2{color:#ff004d;font-size:1.6rem;margin-bottom:.6rem;text-transform:uppercase;letter-spacing:1px}
+  .boxed{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:1.6rem;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .boxed img{width:100%;border-radius:10px;margin-top:1rem;border:1px solid rgba(255,255,255,0.06);background:#061018;height:260px;object-fit:cover}
+
+  .btn{display:inline-block;margin-top:1rem;padding:.85rem 1.4rem;border-radius:26px;border:none;background:linear-gradient(90deg,#ff004d,#00b7ff);color:#fff;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(181,27,47,.12)}
+</style>
+</head>
+<body>
+
+<nav>
+  <h1 onclick="location.href='index.html'">RedWing Robotics</h1>
+
+  <!-- Inline desktop links (visible >=900px) -->
+  <div class="nav-links" id="desktopLinks">
+    <a href="index.html">Home</a>
+    <a href="programming.html">Programming</a>
+    <a href="cad.html">CAD</a>
+    <a href="building.html" style="color:#00b7ff">Building</a>
+    <a href="marketing_booth.html">Marketing/Booth</a>
+    <a href="sponsors.html">Sponsors</a>
+    <a href="contact.html">Investors</a>
+  </div>
+
+  <!-- hamburger always present on small screens -->
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Open menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+</nav>
+
+<!-- backdrop for closing the menu -->
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+<!-- side panel that slides in (mobile navigation) -->
+<aside class="side-panel" id="sidePanel" aria-hidden="true">
+  <div class="brand">
+    <div style="width:46px;height:46px;border-radius:8px;background:linear-gradient(135deg,#b51b2f,#280009)"></div>
+    <div style="font-weight:800;color:var(--cardinal,#b51b2f);font-family:Orbitron, sans-serif">RedWing Tech</div>
+  </div>
+
+  <nav aria-label="Mobile links" style="width:100%;margin-top:10px;display:flex;flex-direction:column;gap:6px">
+    <a href="index.html">Home</a>
+    <a href="programming.html">Programming</a>
+    <a href="cad.html">CAD</a>
+    <a href="building.html" style="color:#00b7ff">Building</a>
+    <a href="marketing_booth.html">Marketing/Booth</a>
+    <a href="sponsors.html">Sponsors</a>
+    <a href="contact.html">Investors</a>
+  </nav>
+
+  <div style="margin-top:auto;width:100%">
+    <button id="closePanel" style="width:100%;padding:.8rem;border-radius:12px;border:none;background:#111;color:#fff;font-weight:700;cursor:pointer">Close</button>
+  </div>
+</aside>
+
+<main>
+  <section>
+    <h2>Building Department</h2>
+    <div class="boxed">
+      <p>The Building Department is responsible for transforming CAD models into physical robots that meet competitive standards. Builders ensure every component aligns precisely with design specifications for reliability and performance under competition pressure.</p>
+      <img src="building_placeholder1.png" alt="Building Assembly">
+    </div>
+  </section>
+
+  <section>
+    <h2>Assembly and Quality</h2>
+    <div class="boxed">
+      <p>Every piece is measured and installed to exact tolerances. The team double-checks structural stability, mechanical motion, and safety before any testing begins, ensuring consistent quality in all builds.</p>
+      <img src="building_placeholder2.png" alt="Assembly Process">
+    </div>
+  </section>
+
+  <section>
+    <h2>Collaboration</h2>
+    <div class="boxed">
+      <p>The Build team works closely with CAD and Programming to ensure designs translate correctly into the final robot. By collaborating early, the team prevents fit issues and integrates key electrical and pneumatic systems seamlessly.</p>
+      <img src="building_placeholder3.png" alt="Team Collaboration">
+    </div>
+  </section>
+
+  <section>
+    <h2>Testing and Iteration</h2>
+    <div class="boxed">
+      <p>After assembly, builders lead the testing phase, logging performance data, identifying faults, and refining designs. This hands-on validation process ensures the robot operates with accuracy and durability.</p>
+      <img src="building_placeholder4.png" alt="Testing Process">
+      <div style="margin-top:12px">
+        <button class="btn" onclick="location.href='marketing_booth.html'">Next: Marketing & Booth</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Safety and Training</h2>
+    <div class="boxed">
+      <p>Safety is integral to every stage of building. Students are trained in tool operation, equipment maintenance, and safe workshop conduct, creating a disciplined and secure workspace.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Robust menu handling: works for click and touch, waits for DOM.
+  (function(){
+    const hamburger = document.getElementById('hamburger');
+    const sidePanel = document.getElementById('sidePanel');
+    const backdrop = document.getElementById('backdrop');
+    const closeBtn = document.getElementById('closePanel');
+
+    // helper toggles
+    function openPanel(){
+      sidePanel.classList.add('open');
+      backdrop.classList.add('visible');
+      hamburger.setAttribute('aria-expanded','true');
+      sidePanel.setAttribute('aria-hidden','false');
+      backdrop.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
+    function closePanel(){
+      sidePanel.classList.remove('open');
+      backdrop.classList.remove('visible');
+      hamburger.setAttribute('aria-expanded','false');
+      sidePanel.setAttribute('aria-hidden','true');
+      backdrop.setAttribute('aria-hidden','true');
+      document.body.style.overflow = ''; // restore scroll
+    }
+
+    // attach listeners once DOM is ready
+    function attach(){
+      // support both click and touchstart for maximum responsiveness
+      ['click','touchstart'].forEach(evtType=>{
+        hamburger.addEventListener(evtType, function(e){
+          // prevent double-firing touch + click
+          if(evtType === 'touchstart') e.preventDefault();
+          const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+          if(!expanded) openPanel(); else closePanel();
+        }, {passive:false});
+      });
+
+      // close interactions
+      ['click','touchstart'].forEach(evtType=>{
+        backdrop.addEventListener(evtType, function(e){
+          if(evtType === 'touchstart') e.preventDefault();
+          closePanel();
+        }, {passive:false});
+        closeBtn.addEventListener(evtType, function(e){
+          if(evtType === 'touchstart') e.preventDefault();
+          closePanel();
+        }, {passive:false});
+      });
+
+      // close when a link is tapped (mobile nav)
+      sidePanel.querySelectorAll('a').forEach(a=>{
+        a.addEventListener('click', ()=> closePanel());
+        a.addEventListener('touchstart', (ev)=> { ev.preventDefault(); window.location.href = a.href; closePanel(); }, {passive:false});
+      });
+
+      // keyboard escape
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape') closePanel();
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attach);
+    } else {
+      attach();
+    }
+  })();
+</script>
+</body>
+</html>

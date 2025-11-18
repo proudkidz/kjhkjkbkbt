@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>RedWing Tech — Official Homepage</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- ROOT & RESET ---------- */
+  :root{
+    --cardinal:#b51b2f;
+    --cardinal-strong:#ff004d;
+    --accent:#0ea8ff;
+    --bg:#070708;
+    --glass: rgba(255,255,255,0.04);
+    --muted:#bfc8d1;
+    --btn-grad: linear-gradient(90deg,var(--cardinal-strong), #00b7ff);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(circle at 10% 10%, #0c0d10 0%, #030306 70%);
+    color:#eef2f5;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%;border-radius:10px}
+
+  /* ---------- NAV BAR ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;height:76px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 32px;background:rgba(6,6,8,0.86);
+    backdrop-filter:blur(8px);z-index:1100;border-bottom:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
+  .brand{
+    font-family:"Lexend",sans-serif;
+    font-weight:700;color:var(--cardinal-strong);
+    font-size:1.15rem;cursor:pointer;user-select:none;
+  }
+  .nav-center{display:flex;align-items:center;gap:18px}
+  .nav-links{display:flex;gap:14px;align-items:center}
+  .nav-item{position:relative}
+  .nav-item > a, .nav-item > button{
+    color:#eef2f5;background:transparent;border:none;font-weight:600;padding:6px 8px;border-radius:8px;cursor:pointer;font-size:0.98rem;
+  }
+  .nav-item > a:hover, .nav-item > button:hover{ color:var(--cardinal-strong); transform:translateY(-2px); }
+
+  /* dropdown card */
+  .dropdown-card{
+    position:absolute;top:calc(100% + 8px);left:0;
+    min-width:220px;background:#0f1620;border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,0.04);
+    box-shadow:0 20px 50px rgba(0,0,0,0.6);display:none;flex-direction:column;gap:6px;z-index:1200;
+    transform-origin:top center;animation:dropIn .26s ease forwards;
+  }
+  @keyframes dropIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:none}}
+  .dropdown-card a{color:#dfe8ee;padding:8px;border-radius:8px;font-weight:500}
+  .dropdown-card a:hover{background:rgba(255,255,255,0.03); color:var(--accent)}
+
+  .controls{display:flex;gap:12px;align-items:center}
+  .search-wrap{background:var(--glass);padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.03)}
+  .search-wrap input{background:transparent;border:none;color:#fff;outline:none;width:220px;font-size:0.95rem}
+  .login-btn{background:var(--cardinal-strong);border:none;padding:8px 12px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer}
+  .cta-btn{background:var(--btn-grad);padding:8px 14px;border-radius:12px;color:#fff;border:none;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(179,0,58,0.12)}
+
+  @media(max-width:980px){ .search-wrap{display:none} .nav-center{gap:10px} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:120px 24px 40px;min-height:86vh;display:grid;grid-template-columns:1fr 460px;gap:36px;align-items:center;
+  }
+  @media(max-width:980px){ .hero{grid-template-columns:1fr;padding-top:96px} }
+  .hero-left .eyebrow{color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:10px;letter-spacing:1.6px}
+  .hero-left .title{font-family:"Lexend",sans-serif;font-size:2.8rem;font-weight:800;margin-bottom:6px;color:#fff}
+  .hero-left .type{font-size:1.6rem;color:var(--cardinal-strong);font-weight:800;min-height:44px;margin-bottom:12px}
+  .hero-left .lead{color:var(--muted);font-size:1.05rem;max-width:720px}
+
+  .hero-right{background:var(--glass);padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
+  .hero-right img{height:460px;object-fit:cover}
+  @media(max-width:980px){ .hero-right img{height:320px} }
+
+  .cta-row{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+
+  /* ---------- SECTIONS (boxed) ---------- */
+  .section{max-width:1100px;margin:28px auto;padding:18px}
+  .two-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:980px){ .two-grid{grid-template-columns:1fr} }
+  .panel{background:var(--glass);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+  .panel h3{color:#fff;margin-bottom:8px}
+  .panel p{color:var(--muted);margin-bottom:10px}
+  .panel figure{margin:8px 0}
+  .panel figcaption{color:#bfc8d1;font-size:0.92rem;margin-top:6px}
+
+  /* ---------- CTA PREORDER ---------- */
+  .preorder-block{display:flex;flex-direction:column;align-items:center;gap:10px;padding:28px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);max-width:900px;margin:28px auto}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:56px 18px;background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+  .footer-inner{max-width:1100px;margin:0 auto;text-align:center}
+  .footer-inner img{height:72px;margin-bottom:12px}
+  .footer-inner p{margin:8px 0;color:var(--muted);line-height:1.6}
+
+  /* ---------- MODAL (login) ---------- */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:1400}
+  .modal{background:#0f1720;padding:20px;border-radius:12px;width:420px;border:1px solid rgba(255,255,255,0.04)}
+  .modal h4{margin-bottom:8px;color:#fff}
+  .modal label{display:block;color:var(--muted);font-size:0.9rem;margin-top:8px}
+  .modal input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;margin-top:6px}
+
+  /* helper */
+  .muted{color:var(--muted)}
+  .small{font-size:0.92rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Main Navigation">
+  <div class="brand" onclick="window.location.reload()">RedWing Tech</div>
+
+  <div class="nav-center" role="navigation" aria-label="Primary Navigation">
+    <div class="nav-links">
+      <div class="nav-item">
+        <a href="index.html">Home</a>
+        <div class="dropdown-card" data-for="home"></div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button" aria-haspopup="true">Programming</button>
+        <div class="dropdown-card" data-for="programming"></div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button">CAD</button>
+        <div class="dropdown-card" data-for="cad"></div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button">Building</button>
+        <div class="dropdown-card" data-for="building"></div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button">Marketing</button>
+        <div class="dropdown-card" data-for="marketing"></div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button">Sponsors</button>
+        <div class="dropdown-card" data-for="sponsors"></div>
+      </div>
+
+      <div class="nav-item">
+        <a href="preorder.html">Pre-Order</a>
+        <div class="dropdown-card" data-for="preorder"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap" role="search">
+      <input id="siteSearch" placeholder="Search site..." aria-label="Search site">
+    </div>
+
+    <button id="loginBtn" class="login-btn" aria-haspopup="dialog">Login</button>
+    <button class="cta-btn" onclick="location.href='preorder.html'">Pre-Order</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<main>
+  <section class="hero" id="hero">
+    <div class="hero-left">
+      <!-- Typing animation replaces static heading -->
+      <div class="title" style="display:none">RedWing Tech Presents</div>
+      <div id="typewriter" class="type" aria-live="polite"></div>
+
+      <p class="lead muted">Reserve the competition-ready robot now. Designed for modularity, reliability, and AI-enabled performance — limited production run with technical assets included.</p>
+
+      <div class="cta-row">
+        <button class="cta-btn" onclick="location.href='preorder.html'">Reserve Your Unit</button>
+        <button class="login-btn" id="quickContact" style="background:#ff004d">Contact Team</button>
+      </div>
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <!-- Hero image (matches product / showcase) -->
+      <img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_001.png" alt="RedWing robot showcase">
+    </div>
+  </section>
+
+  <!-- SECTIONS: KEEP CONTENT & ORDER FROM ORIGINAL GOOD VERSION -->
+  <section id="mission" class="section">
+    <div class="two-grid">
+      <article class="panel">
+        <h3>Mission</h3>
+        <p>To empower engineering-minded students and industry partners to develop dependable robotic systems for real-world challenges through precise CAD-driven design, iterative testing, and thoughtful integration of intelligent control.</p>
+        <p class="small muted">Accounts, documentation, and reproducibility are central to our process.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_005.png" alt="Team Mission"><figcaption class="small">Design review and team planning.</figcaption></figure>
+      </article>
+
+      <article class="panel">
+        <h3>Brand Promise</h3>
+        <p><strong>M A D — Melissa Always Delivers.</strong> Our commitment: thorough engineering documentation, repeatable manufacturing, and professional program stewardship.</p>
+        <p class="small muted">Sponsor-ready assets and consistent delivery are part of the guarantee.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_006.png" alt="Brand promise"><figcaption class="small">Sponsor recognition & branded materials.</figcaption></figure>
+      </article>
+    </div>
+  </section>
+
+  <section id="mentorship" class="section">
+    <div class="two-grid">
+      <article class="panel">
+        <h3>Mentorship & Outreach</h3>
+        <p>Structured mentor-mentee pairings and recurring workshops ensure skills transfer across graduating cycles.</p>
+        <p class="small muted">Public demos and outreach grow STEM literacy and recruit future engineers.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_049.jpeg" alt="Mentorship"><figcaption class="small">Mentor-led workshop in progress.</figcaption></figure>
+      </article>
+
+      <article class="panel">
+        <h3>Workshops & Learning</h3>
+        <p>Hands-on workshops cover CAD, fabrication, controls, and programming — designed for students, sponsors, and partners.</p>
+        <p class="small muted">Documented curricula help scale training across cohorts.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_010.png" alt="Workshops"><figcaption class="small">Workshop session: CAD + prototyping.</figcaption></figure>
+      </article>
+    </div>
+  </section>
+
+  <section id="engineering" class="section">
+    <div class="two-grid">
+      <article class="panel">
+        <h3>Engineering & AI Integration</h3>
+        <p>CAD-backed mechanical design integrates with an AI-enabled control stack for perception and decisioning.</p>
+        <p class="small muted">Modular software allows rapid iteration and data-driven improvements.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_021.jpeg" alt="Engineering and AI"><figcaption class="small">Prototype testing with perception systems.</figcaption></figure>
+      </article>
+
+      <article class="panel">
+        <h3>CAD Models & Prototypes</h3>
+        <p>Versioned CAD files with manufacturing notes and BOMs ensure reproducibility and efficient manufacturing handoff.</p>
+        <p class="small muted">Revision history and test traces document design decisions.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_032.png" alt="CAD models"><figcaption class="small">Versioned CAD model preview.</figcaption></figure>
+      </article>
+    </div>
+  </section>
+
+  <section id="finance" class="section">
+    <div class="two-grid">
+      <article class="panel">
+        <h3>Testing & Validation</h3>
+        <p>Controlled test plans, stress and simulation outputs, and empirical validation data support performance claims and safety.</p>
+        <p class="small muted">We document test traces and produce reproducible validation results.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_007.png" alt="Testing"><figcaption class="small">Testing rig and result snapshots.</figcaption></figure>
+      </article>
+
+      <article class="panel">
+        <h3>Financial Snapshot</h3>
+        <p>Given Budget: $1,500. Materials: $1,350. Sponsor Contributions: $4,700. Total Available: $4,850.</p>
+        <p class="small muted">Open, transparent accounting ensures sponsor confidence.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_011.png" alt="Financials"><figcaption class="small">Budget and sponsor breakdown chart.</figcaption></figure>
+      </article>
+    </div>
+  </section>
+
+  <section id="demos" class="section">
+    <div class="two-grid">
+      <article class="panel">
+        <h3>Public Demonstrations</h3>
+        <p>City events, school showcases, and sponsor-hosted demos highlight technical capability and recruit talent.</p>
+        <p class="small muted">Interactive exhibits showcase real-world performance.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_047.png" alt="Public demo"><figcaption class="small">Booth demo and community showcase.</figcaption></figure>
+      </article>
+
+      <article class="panel">
+        <h3>Community Impact</h3>
+        <p>STEM outreach and practical mentorship expand education and career pathways for students.</p>
+        <p class="small muted">Our programs partner with local organizations to multiply impact.</p>
+        <figure><img src="https://uploads.onecompiler.io/43pz8jcrg/443ym7red/image_053.jpeg" alt="Community impact"><figcaption class="small">Outreach event snapshots.</figcaption></figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- BEST registry block (only required items) -->
+  <section class="section">
+    <div class="preorder-block">
+      <img src="https://www.bestrobotics.org/images/BEST-Robotics-Logo.png" alt="BEST Robotics Logo" style="height:64px">
+      <p class="small muted">Includes the national BEST Robotics logo and link. Use #BESTRobotics and tag @BESTRobotics for outreach.</p>
+    </div>
+  </section>
+
+  <!-- Pre-order CTA -->
+  <section class="section" style="text-align:center">
+    <div class="preorder-block">
+      <h3 style="margin-bottom:6px">Reserve the RedWing Robot</h3>
+      <p class="muted" style="max-width:800px;margin:0 auto 8px">Limited production run — place a pre-order to secure a unit. Checkout collects billing and delivery info on the Pre-Order page.</p>
+      <div>
+        <button class="cta-btn" onclick="location.href='preorder.html'">Proceed to Pre-Order</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <img src="https://www.bestrobotics.org/images/BEST-Robotics-Logo.png" alt="BEST Robotics Logo">
+    <p><a href="https://www.bestrobotics.org" target="_blank" rel="noopener">bestrobotics.org</a></p>
+    <p class="small">#BESTRobotics &nbsp; | &nbsp; @BESTRobotics</p>
+  </div>
+</footer>
+
+<!-- LOGIN MODAL (Formspree) -->
+<div id="modalBackdrop" class="modal-backdrop" style="display:none;align-items:center;justify-content:center;">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <h4 id="loginTitle">Sign in with Email</h4>
+    <p class="small muted">Enter your email to request a sign-in link.</p>
+
+    <!-- Formspree endpoint (you provided) -->
+    <form id="loginForm" action="https://formspree.io/f/xrborvzk" method="POST">
+      <label for="email">Email</label>
+      <input id="loginEmail" name="email" type="email" placeholder="name@example.com" required>
+
+      <label for="name">Name (optional)</label>
+      <input id="loginName" name="name" type="text" placeholder="First Last">
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+        <button type="button" id="modalCancel" class="login-btn" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)">Cancel</button>
+        <button type="submit" class="cta-btn">Send</button>
+      </div>
+
+      <input type="hidden" name="_subject" value="RedWing login request">
+      <input type="hidden" name="_captcha" value="false">
+    </form>
+
+    <p class="small muted" style="margin-top:10px">Note: Formspree will forward form submissions to the configured email address for this endpoint.</p>
+  </div>
+</div>
+
+<script>
+/* ========= Typing Animation ========= */
+const phrases = [
+  "Empowering Future Engineers.",
+  "Building Intelligent Robotics.",
+  "Automation for Tomorrow."
+];
+let pi=0, ch=0, deleting=false;
+const tw = document.getElementById('typewriter');
+(function type(){
+  const cur = phrases[pi];
+  if(!deleting){
+    tw.textContent = cur.slice(0, ++ch);
+    if(ch === cur.length+1){ deleting = true; setTimeout(type, 1000); return; }
+    setTimeout(type, 80);
+  } else {
+    tw.textContent = cur.slice(0, --ch);
+    if(ch === 0){ deleting = false; pi = (pi+1)%phrases.length; setTimeout(type, 400); return; }
+    setTimeout(type, 40);
+  }
+})();
+
+/* ========= Dropdowns population & behavior ========= */
+const headings = {
+  home: ["Mission","Brand Promise","Mentorship & Outreach","Workshops & Learning","Engineering & AI","Financial Snapshot","Public Demonstrations"],
+  programming: ["VEX Code","Simulink Code","Simulink Models","AI & Vision","Telemetry","Testing","Documentation"],
+  cad: ["CAD Models","BOM","Revision History","Simulation","Prototyping","Materials","Drawings"],
+  building: ["Assembly","Fabrication","Wiring","Testing","Integration","Safety","QA"],
+  marketing: ["Brand","Outreach","Booth","Media","Presentation","Sponsorships","Collateral"],
+  sponsors: ["Partners","Recognition","Contribution Levels","Benefits","Testimonials","Media Kit","Contact"],
+  preorder: ["Checkout","Billing","Shipping","Warranty","Support","Docs","Contact"]
+};
+
+// fill dropdown cards
+document.querySelectorAll('.dropdown-card').forEach(card=>{
+  const key = card.getAttribute('data-for') || 'home';
+  const list = headings[key] || [];
+  card.innerHTML = list.map(h=>{
+    const anchor = h.replace(/\s+/g,'').toLowerCase();
+    const page = (key === 'home') ? 'index.html' : `${key}.html`;
+    return `<a href="${page}#${anchor}" onclick="handleDropdownClick(event,'${page}','${anchor}')">${h}</a>`;
+  }).join('');
+});
+
+// show dropdown on mouseenter and keep open until click outside
+let activeDropdown = null;
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('mouseenter', () => {
+    // close others
+    document.querySelectorAll('.dropdown-card').forEach(d => d.style.display = 'none');
+    const d = item.querySelector('.dropdown-card');
+    if(d){ d.style.display = 'flex'; activeDropdown = d; }
+  });
+});
+document.addEventListener('click', (e) => {
+  if(!e.target.closest('.nav-item')) {
+    document.querySelectorAll('.dropdown-card').forEach(d => d.style.display = 'none');
+    activeDropdown = null;
+  }
+});
+
+function handleDropdownClick(e, page, anchor){
+  e.preventDefault();
+  const current = window.location.pathname.split('/').pop() || 'index.html';
+  if(page === current || page === 'index.html'){
+    const el = document.getElementById(anchor);
+    if(el){ el.scrollIntoView({behavior:'smooth'}); document.querySelectorAll('.dropdown-card').forEach(d=>d.style.display='none'); return; }
+  }
+  // navigate
+  document.body.style.pointerEvents = 'none';
+  setTimeout(()=> window.location.href = page + '#' + anchor, 180);
+}
+
+/* ========= Search (quick local) ========= */
+document.getElementById('siteSearch').addEventListener('keydown', function(e){
+  if(e.key !== 'Enter') return;
+  const q = this.value.trim().toLowerCase();
+  if(!q) return;
+  if(q.includes('mission')) return document.getElementById('mission').scrollIntoView({behavior:'smooth'});
+  if(q.includes('engineering')) return document.getElementById('engineering').scrollIntoView({behavior:'smooth'});
+  if(q.includes('outreach') || q.includes('mentorship')) return document.getElementById('mentorship').scrollIntoView({behavior:'smooth'});
+  if(q.includes('preorder') || q.includes('order')) return window.location.href = 'preorder.html';
+  alert('No direct match found. Try a section name like "mission" or "engineering".');
+});
+
+/* ========= Login modal behavior ========= */
+const modal = document.getElementById('modalBackdrop');
+document.getElementById('loginBtn').addEventListener('click', ()=> modal.style.display = 'flex');
+document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+  if(e.target === modal) modal.style.display = 'none';
+});
+document.getElementById('modalCancel').addEventListener('click', ()=> modal.style.display = 'none');
+
+/* ========= Smooth reveal for panels ========= */
+function revealOnScroll(){
+  document.querySelectorAll('.panel, .preorder-block').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 80) el.style.transform = 'none', el.style.opacity = 1;
+    else { el.style.transform = 'translateY(18px)'; el.style.opacity = 0; }
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+</script>
+</body>
+</html>
